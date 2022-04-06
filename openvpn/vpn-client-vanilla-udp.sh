@@ -6,8 +6,8 @@ sudo openvpn \
     --cipher AES-128-CBC \
     --dev tun --client --tls-client \
     --remote-cert-tls server --tls-version-min 1.2 \
-    --ca /dev/shm/ca.crt --cert /dev/shm/cert.pem --key /dev/shm/cert.pem \
-    --proto tcp4 \
+    --ca /tmp/ca.crt --cert /tmp/cert.pem --key /tmp/cert.pem \
     --pull-filter ignore ifconfig-ipv6 \
     --pull-filter ignore route-ipv6 \
-    --remote $GW 443 tcp4
+    --proto udp4 \
+    --remote $GW 443 udp4

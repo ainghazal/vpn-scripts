@@ -16,8 +16,11 @@ certs:
 connect-obfs4:
 	./obfs4/vpn-client-obfs4.sh
 
-connect-vanilla:
-	./openvpn/vpn-client-vanilla.sh
+connect-vanilla-tcp:
+	./openvpn/vpn-client-vanilla-tcp.sh
+
+connect-vanilla-tcp:
+	./openvpn/vpn-client-vanilla-udp.sh
 
 check:
 	curl https://wtfismyip.com/json
