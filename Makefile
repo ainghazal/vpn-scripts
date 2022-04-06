@@ -14,10 +14,10 @@ certs:
 	curl -k https://api.black.riseup.net/3/cert > /dev/shm/cert.pem
 
 connect-obfs4:
-	./obfs4/vpn-client.sh
+	./obfs4/vpn-client-obfs4.sh
 
 connect-vanilla:
-	./openvpn/vpn-client-direct.sh
+	./openvpn/vpn-client-vanilla.sh
 
 check:
 	curl https://wtfismyip.com/json
