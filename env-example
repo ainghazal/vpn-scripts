@@ -1,0 +1,2 @@
+export NDT_SERVER=1.1.1.1
+export GW=2.2.2.2
