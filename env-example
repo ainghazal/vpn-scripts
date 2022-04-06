@@ -1,2 +1,8 @@
+# the ndt server we use for measurements
 export NDT_SERVER=1.1.1.1
+
+# the vpn gateway. we assume port 443
 export GW=2.2.2.2
+
+# the bridge remote
+export REMOTE=3.3.3.3
