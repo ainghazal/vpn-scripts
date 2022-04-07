@@ -9,7 +9,7 @@ VANILLA = "vanilla"
 VANILLA_UDP = "vanilla-udp"
 OBFS4 = "obfs4"
 TYPES = (BASE, VANILLA, VANILLA_UDP, OBFS4)
-HEADER = '''down_mbit_s,up_mbit_s,down_retrasn_mb_s,min_rtt_ms'''
+HEADER = '''exp,down_mbit_s,up_mbit_s,down_retrasn_mb_s,min_rtt_ms'''
 
 def parseDataFiles(exp_type):
     if exp_type not in TYPES:
