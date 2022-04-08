@@ -1,0 +1,43 @@
+---
+title: "OpenVPN Traffic"
+subtitle: "Exploratory Data Analysis: baseline traffic"
+author: Ain Ghazal
+
+
+date: 2022-04-07
+output:
+  html_document:
+    toc: true
+    theme: united
+  pdf_document:
+    toc: true
+    highlight: zenburn
+params:
+    data: test
+---
+
+# Experiment description
+
+The following measurements were taken against an ndt server (located in amsterdam, oracle cloud).
+
+Chosen OpenVPN gateway: Paris (RiseupVPN).
+
+* base: residential connection (fiber)
+* vanilla: openvpn (tcp mode).
+* vanilla-udp: openvpn (udp mode).
+* obfs4: openvpn (tcp) over obfs4 (bridge in amsterdam).
+
+# Boxplots
+
+```{r}
+library(ggplot2)
+d  <- read.csv('../data/data.csv')
+ggplot(data=d, aes(x=exp, y=down)) + geom_boxplot() +
+    xlab("experiment") + ylab("Download (Mbit/s)")
+ggplot(data=d, aes(x=exp, y=up)) + geom_boxplot() +
+    xlab("experiment") + ylab("Upload (Mbit/s)")
+ggplot(data=d, aes(x=exp, y=minrtt)) + geom_boxplot() +
+    xlab("experiment") + ylab("MinRTT (ms)")
+ggplot(data=d, aes(x=exp, y=retr)) + geom_boxplot() +
+    xlab("experiment") + ylab("Download Retransmission (%)")
+```
