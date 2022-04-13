@@ -41,3 +41,22 @@ ggplot(data=d, aes(x=exp, y=minrtt)) + geom_boxplot() +
 ggplot(data=d, aes(x=exp, y=retr)) + geom_boxplot() +
     xlab("experiment") + ylab("Download Retransmission (%)")
 ```
+
+# Metrics
+
+
+```{r}
+bw  <- read.csv('../data/bw.csv')
+ggplot(data=bw, aes(x=time, y=speed, color=exp)) +
+    geom_point() + 
+    labs(x = "Elapsed Time (s)", y = "Download speed (Mbit/s)")
+ggplot(data=bw, aes(x=time, y=bw, color=exp)) +
+    geom_point() + 
+    labs(x = "Elapsed Time (s)", y = "BW")
+ggplot(data=bw, aes(x=time, y=delivery_rate, color=exp)) +
+    geom_point() +
+    labs(x = "Elapsed Time (s)", y = "Delivery Rate")
+ggplot(data=bw, aes(x=time, y=pacing_rate, color=exp)) +
+    geom_point() + 
+    labs(x = "Elapsed Time (s)", y = "Pacing Rate")
+```
