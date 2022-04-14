@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+import os
+from numpy.random import exponential
+from numpy import histogram
+from numpy import average
+
+DEBUG = os.getenv('DEBUG') == '1'
+
+LOWER = 10       # secs
+UPPER = 60 * 10  # secs
+
+SCALE = 30
+
+if DEBUG:
+    SIZE=10000
+else:
+    SIZE=1
+
+def getSample():
+    while True:
+        s = exponential(scale=SCALE, size=SIZE) + LOWER
+        # for debug, we want to examine the distribution
+        if len(s) != 1:
+            return s
+        # if we're picking only one, we want to truncate the upper value
+        if s[0] < UPPER:
+            return s
+
+s = getSample()
+
+if DEBUG:
+    print(s)
+    print("max:", max(s))
+    print("min:", min(s))
+    print("avg:", average(s))
+    print("above:", len(list(filter(lambda x: x>UPPER, s)))*100/SIZE, "%")
+
+    import matplotlib.pyplot as plt
+    _ = plt.hist(s, bins='auto')
+    plt.show()
+else:
+    print(s[0])
+

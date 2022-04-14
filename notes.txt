@@ -7,3 +7,5 @@ research:
 2022-04-07 00:55:28 AEAD Decrypt error: bad packet ID (may be a replay): [ #572200 ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mute-replay-warnings
 2022-04-07 00:55:28 AEAD Decrypt error: bad packet ID (may be a replay): [ #572201 ] -- see the man page entry for --no-replay and --replay-window for more info or silence this warning with --mute-replay-warnings
 
+PASTA:
+https://www.geeksforgeeks.org/python-truncated-exponential-distribution-in-statistics/
