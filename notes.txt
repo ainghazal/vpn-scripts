@@ -9,3 +9,6 @@ research:
 
 PASTA:
 https://www.geeksforgeeks.org/python-truncated-exponential-distribution-in-statistics/
+
+TLS out of sync:
+WWR2022-04-18 21:51:26 us=341834 TLS Error: local/remote TLS keys are out of sync: [AF_INET]127.0.0.1:4430 [0]
