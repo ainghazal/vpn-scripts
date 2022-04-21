@@ -7,6 +7,7 @@ client
 
 ## source: openvpn (udp)
 
+```
 #!/bin/sh
 set -x
 sudo openvpn \
@@ -21,12 +22,20 @@ sudo openvpn \
     --pull-filter ignore route-ipv6 \
     --remote 127.0.0.1 4430 \
     --route $OBFS4_ENDPOINT 255.255.255.255 net_gateway
+```
 
+## udp2tcp
+
+using [vpnproxy](https://github.com/ainghazal/vpnproxy)
 
 ```
 [UDP] -> [TCP]
 ./udp-proxy-client --source 127.0.0.1:4430 --target 127.0.0.1:1443
 ```
+
+## shapeshifter dispatcher (transparent proxy)
+
+* want to get rid of this piece.
 
 ```
 [TCP] -> [TCP]
@@ -45,12 +54,22 @@ shapeshifter-dispatcher \
 server
 ======
 
+```
+[TCP] -> [TCP] -> [UDP]
 obfs4 proxy (tcp) -> local (tcp) -> VPN gateway (udp)
+```
+
+## source: obfsproxy (obfs4 PT, ORPORT as sink)
 
 ```
 [TCP] -> [TCP]
 ./obfsproxy -addr ${LHOST} -vpn ${RHOST} -state test_data -c test_data/obfs4.json
 ```
+
+## tcp2udp
+
+* using [vpnproxy](https://github.com/ainghazal/vpnproxy)
+* want to get rid of this piece.
 
 ```
 [TCP] -> [UDP]
