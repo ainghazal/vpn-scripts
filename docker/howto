@@ -1,0 +1,1 @@
+docker run -d --name ndt7 --mount source=ndt-data,target=/datadir measurementlab/ndt-server:latest
