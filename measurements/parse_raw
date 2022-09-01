@@ -1,0 +1,101 @@
+#!/usr/bin/env python3
+
+import csv
+import gzip
+import glob
+import json
+import sys
+
+fieldNames = [
+    'ts',
+    'provider',
+    'cc',
+    'asn',
+    'remote',
+    'transport',
+    'obfs',
+    'ok',
+    'stage',
+    'boot_time',
+    'p1_target',
+    'p1_loss',
+    'p1_min',
+    'p1_max',
+    'p1_avg',
+    'p2_target',
+    'p2_loss',
+    'p2_min',
+    'p2_max',
+    'p2_avg',
+]
+
+
+def parseRawFiles():
+    measurements = []
+    files = glob.glob("*/*/*/*/*.gz")
+
+    with open('data.csv', 'w', newline='') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=fieldNames)
+
+        for f in files:
+            with gzip.open(f, 'rb') as gz:
+                measurements = [json.loads(line) for line in gz.read().splitlines()]
+                loopMeasurements(measurements, writer)
+
+def loopMeasurements(mm, writer):
+    for m in mm:
+        tk = m['test_keys']
+        pings = tk.get('pings')
+
+        ping1_avg = ping1_max = ping1_min = None
+        ping1_target = ""
+        loss1 = None
+        ping2_avg = ping2_max = ping2_min = None
+        ping2_target = ""
+        loss2 = None
+
+        if pings is not None and len(pings) > 0:
+            p1 = pings[0]
+            ping1_target = p1['target']
+            ping1_avg = p1['avg_rtt']
+            ping1_max = p1['max_rtt']
+            ping1_min = p1['min_rtt']
+            loss1 = 1 - float(p1['pkt_rcv']/float(p1['pkt_snt']))
+
+        if pings is not None and len(pings) > 1:
+            p2 = pings[1]
+            ping2_target = p2['target']
+            ping2_min = p2['min_rtt']
+            ping2_max = p2['max_rtt']
+            ping2_avg = p2['avg_rtt']
+            loss2 = 1 - float(p2['pkt_rcv']/float(p2['pkt_snt']))
+
+        writer.writerow({
+            'ts': m['measurement_start_time'],
+            'provider': tk['provider'],
+            'cc': m['probe_cc'],
+            'asn': m['probe_asn'],
+            'remote': tk['remote'],
+            'transport': tk['transport'],
+            'obfs': tk['obfuscation'],
+            'ok': int(tk['success']),
+            'stage': tk['stage'],
+            'boot_time': tk['bootstrap_time'],
+            'p1_target': ping1_target,
+            'p1_loss': loss1,
+            'p1_min': ping1_min,
+            'p1_max': ping1_max,
+            'p1_avg': ping1_avg,
+            'p2_target': ping2_target,
+            'p2_loss': loss2,
+            'p2_min': ping2_min,
+            'p2_max': ping2_max,
+            'p2_avg': ping2_avg,
+        })
+
+
+
+
+
+if __name__ == "__main__":
+    parseRawFiles()
